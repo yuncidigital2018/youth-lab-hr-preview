@@ -64,7 +64,7 @@ npm run preview
 ## 驗證記錄（2026-10-23）
 
 - TypeScript 與 Vite build：通過。
-- Vitest：11 個測試通過（5 個模型測試、6 個 jsdom 元件互動測試）。
+- Vitest：12 個測試通過（5 個模型測試、7 個 jsdom 元件互動測試）。
 - 涵蓋多段累加／休息排除、未結束區間、翌日時間表示、預留／釋放、核准不重扣；取消清空、雙擊送出只新增一筆、角色切換、核准後按鈕消失、多段打卡、補卡與重複入口消失、班別編輯、搜尋空狀態、月曆與未發布班表／薪資。
 - 真實瀏覽器互動、視覺截圖、手機尺寸／實機、下載檔案落地：未驗證。Computer Use 回報 Chrome 不可用、瀏覽器清單為空，未改以其他 UI 自動化工具繞過。
 - 響應式 CSS 已實作，但尚需在真實桌面及手機瀏覽器檢查溢位、觸控及視覺密度；jsdom 不提供視覺排版保證。
@@ -79,6 +79,8 @@ npm run preview
 - `index.html`、`assets/`：可直接提供的編譯展示產物，與原始碼一同保留。
 - `scripts/publish-pages.mjs`：build 後同步根目錄展示產物，不覆蓋 app/。
 - Vite `base: './'` 使用相對資產路徑，可在 repo 子路徑開啟。
-- `.github/workflows/pages.yml`：main push 時安裝依賴、typecheck、11 個測試、build，只上傳 dist/ 並部署 Pages。
+- `.github/workflows/pages.yml`：main push 時安裝依賴、typecheck、12 個測試、build，只上傳 dist/ 並部署 Pages。
 
 每次修改後執行測試與 build，一併提交來源與根目錄展示產物。沒有 service worker、正式 API、環境密鑰或後端服務。角色切換只是本機記憶體展示，不是授權系統。
+
+打卡操作成功後鎖定所有打卡按鈕 800ms，並以可讀狀態提示，防止同一連點觸發下班後重新上班或休息互逆操作；時間到後恢復正常操作。
